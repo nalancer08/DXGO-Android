@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,66 +33,41 @@ public class Splash extends ActionBarActivity {
         // SIEMPRE SIEMPRE CREAMOS ESTA COSA, PARA QUE TODOO LO DEMAS JALE
         final Context context = this;
         AbsoluteLayout windowsCanvas = new AbsoluteLayout(this);
-
-        // CREAMOS EL CONTENEDOR PADRE
         this.window = new SfPanel();
 
-        // CREAMOS PANELES HIJOS
-        //SfPanel cuadro1 = new SfPanel();
-        //SfPanel cuadro2 = new SfPanel();
+        windowsCanvas.setBackgroundResource(R.drawable.po);
 
-        // CREO EL VIEW
-        View backGround = new View(context);
-        ///View c1 = new View(context);
-        //ImageView c2 = new ImageView(context);
 
-        // LE DOY COLOR DE FONDO
-        backGround.setBackgroundColor(Color.CYAN);
-        //c1.setBackgroundColor(Color.RED);
+        new CountDownTimer(3500, 1000) {
 
-        // LENO VIEWS (LOS QUE SE PUEDAN)
-        //c2.setImageResource(R.drawable.go_1);
+            public void onTick(long millisUntilFinished) {
+                //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                String time = String.valueOf(millisUntilFinished / 1000);
+                Log.d("POKEDEX GO", "TIEMPO PARA CAMBIO = " + time);
+            }
 
-        // PONEMOS EL VIEW EN EL PANEL
-        this.window.setView(backGround);
-        //cuadro1.setView(c1);
-        //cuadro2.setView(c2);
+            public void onFinish() {
 
-        // DOY TAMAÑOS A TODOO
+                Intent intent = new Intent(Splash.this, Home.class);
+                startActivity(intent);
+            }
+        }.start();
+
+
+
+
+        ////
+
+        ImageView splash = new ImageView(context);
+        splash.setImageResource(R.drawable.po);
+
+        this.window.setView(splash);
+
         this.window.setSize(-100, -100);
-        //cuadro1.setSize(-90, -50);
-        //cuadro2.setSize(-40, -25);
+        this.window.setPadding(0,0,0,0);
+        this.window.setOrigin(0,0,0,0);
+        //windowsCanvas.addView(splash);
 
-        // HACEMOS APPENDS
-        //this.window.append(cuadro1);
-        //this.window.append(cuadro2);
-
-        // AGREGAMOS A LA PANTALLA
-        windowsCanvas.addView(backGround);
-        //windowsCanvas.addView(c1);
-        //windowsCanvas.addView(c2);
-
-        String name = new String();
-        int id;
-
-        for ( int i = 1; i<=9; i++ ) {
-            name = "go_".concat(String.valueOf(i));
-
-            SfPanel pokemonPanel = new SfPanel();
-            ImageView pokemonView = new ImageView(context);
-
-            id = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-            pokemonView.setImageResource(id);
-            //pokemonView.setBackgroundColor(Color.GRAY);
-            pokemonView.setBackgroundResource(R.drawable.border);
-
-            pokemonPanel.setView(pokemonView);
-            this.window.append(pokemonPanel);
-            pokemonPanel.setSize(-32,-15);
-            pokemonPanel.setMargin(5,5,10,0);
-            pokemonPanel.setKey(name);
-            windowsCanvas.addView(pokemonView);
-        }
 
         // PONER ESTO
         window.update(this);
@@ -101,6 +78,12 @@ public class Splash extends ActionBarActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Toast.makeText(this, "NO NO NO", Toast.LENGTH_SHORT).show();
     }
 
 }

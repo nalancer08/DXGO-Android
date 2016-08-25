@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 public class Home extends ActionBarActivity {
 
-    protected Puppeteer puppeteer;
+    protected SfPanel window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,168 +24,89 @@ public class Home extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // Make activity fullscreen
 
-        Typeface font = Typeface.createFromAsset( getAssets(), "fontawesome-webfont.ttf" );
-
+        // SIEMPRE SIEMPRE CREAMOS ESTA COSA, PARA QUE TODOO LO DEMAS JALE
         final Context context = this;
+        AbsoluteLayout windowsCanvas = new AbsoluteLayout(this);
 
-        puppeteer = new Puppeteer(this);
-        SfPanel content = puppeteer.createLayout(Puppeteer.PUPPET_HEADER_FOOTER);
+        // CREAMOS EL CONTENEDOR PADRE
+        this.window = new SfPanel();
 
-        EditText text = new EditText(this);
-        SfPanel panel = new SfPanel();
-        text.setBackgroundColor(Color.rgb(240, 240, 240));
-        panel.setView(text);
-        panel.setSize(-100, 200);
-        //content.append(panel);
-        //puppeteer.baseLayout.addView(text);
-        //content.update(this);
+        // CREAMOS PANELES HIJOS
+        //SfPanel cuadro1 = new SfPanel();
+        //SfPanel cuadro2 = new SfPanel();
 
-        puppeteer.panelFooter.setPadding(0, 0, 0, 0);
+        // CREO EL VIEW
+        View backGround = new View(context);
+        ///View c1 = new View(context);
+        //ImageView c2 = new ImageView(context);
 
-        Button button = null;
-        button = (Button) puppeteer.addMenuButton(getResources().getString(R.string.fa_bars), 0, -25, Puppeteer.PUPPET_MENU_RIGHT, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click en menu", Toast.LENGTH_SHORT).show();
-            }
-        }).getView();
+        // LE DOY COLOR DE FONDO
 
-        button.setTypeface(font);
-        button.setBackgroundColor(Color.rgb(50, 50, 50));
-        button.setTextColor(Color.WHITE);
+        backGround.setBackgroundResource(R.color.darksss);
+        //backGround.setBackgroundResource(R.drawable.po);
 
-        button = (Button) puppeteer.addFooterButton(getResources().getString(R.string.fa_user), 0, -25, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click en 1", Toast.LENGTH_SHORT).show();
-            }
-        }).getView();
+        //c1.setBackgroundColor(Color.RED);
 
-        button.setTypeface(font);
-        button.setBackgroundColor(Color.rgb(50, 50, 50));
-        button.setTextColor(Color.WHITE);
+        // LENO VIEWS (LOS QUE SE PUEDAN)
+        //c2.setImageResource(R.drawable.go_1);
 
-        button = (Button) puppeteer.addFooterButton(getResources().getString(R.string.fa_warning), 0, -25, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(context, "Click en 2", Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(MainActivity.this, TertuliaActivity.class);
-                //startActivity(intent);
-            }
-        }).setMargin(-10, 0, 0, 0).setSize(-25, puppeteer.panelFooter.frame.height + 10).getView();
+        // PONEMOS EL VIEW EN EL PANEL
+        this.window.setView(backGround);
+        //cuadro1.setView(c1);
+        //cuadro2.setView(c2);
 
-        button.setTypeface(font);
-        button.setBackgroundColor(Color.rgb(152, 50, 50));
-        button.setTextColor(Color.WHITE);
+        // DOY TAMAÑOS A TODOO
+        this.window.setSize(-100, -100);
+        //cuadro1.setSize(-90, -50);
+        //cuadro2.setSize(-40, -25);
 
-        button = (Button) puppeteer.addFooterButton(getResources().getString(R.string.fa_cog), 0, -25, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click en 3", Toast.LENGTH_SHORT).show();
-            }
-        }).getView();
+        // HACEMOS APPENDS
+        //this.window.append(cuadro1);
+        //this.window.append(cuadro2);
 
-        button.setTypeface(font);
-        button.setBackgroundColor(Color.rgb(50, 50, 50));
-        button.setTextColor(Color.WHITE);
+        // AGREGAMOS A LA PANTALLA
+        windowsCanvas.addView(backGround);
+        //windowsCanvas.addView(c1);
+        //windowsCanvas.addView(c2);
 
-        SfPanel panel1 = new SfPanel();
-        SfPanel panel2 = new SfPanel();
-        SfPanel panel3 = new SfPanel();
-        SfPanel panel4 = new SfPanel();
-        SfPanel panel5 = new SfPanel();
-        SfPanel panel6 = new SfPanel();
-        SfPanel panel7 = new SfPanel();
+        String name = new String();
+        int id;
+        String idPokemon = new String();
 
-        View view1 = new View(context);
-        View view2 = new View(context);
-        View view3 = new View(context);
-        View view4 = new View(context);
-        View view5 = new View(context);
-        View view6 = new View(context);
-        View view7 = new View(context);
+        for ( int i = 1; i<=15; i++ ) {
+            name = "go_".concat(String.valueOf(i));
 
-        view1.setBackgroundColor(Color.RED);
-        view2.setBackgroundColor(Color.BLUE);
-        view3.setBackgroundColor(Color.CYAN);
-        view4.setBackgroundColor(Color.YELLOW);
-        view5.setBackgroundColor(Color.MAGENTA);
-        view6.setBackgroundColor(Color.GRAY);
-        view7.setBackgroundColor(Color.GREEN);
+            SfPanel pokemonPanel = new SfPanel();
+            ImageView pokemonView = new ImageView(context);
 
-        panel1.setView(view1);
-        panel2.setView(view2);
-        panel3.setView(view3);
-        panel4.setView(view4);
-        panel5.setView(view5);
-        panel6.setView(view6);
-        panel7.setView(view7);
-        panel1.setSize(-30, 60).setKey("panel1").setMargin(0, 5, 5, 0);
-        panel2.setSize(-30, 60).setKey("panel2").setMargin(0, 5, 5, 0);
-        panel3.setSize(-30, 30).setKey("panel3").setMargin(0, 5, 5, 0);
-        panel4.setSize(-30, 150).setKey("panel4").setMargin(0, 5, 5, 0);
-        panel5.setSize(-30, 30).setKey("panel5").setMargin(0, 5, 5, 0);
-        panel6.setSize(-30, 30).setKey("panel6").setMargin(0, 5, 5, 0);
-        panel7.setSize(-30, 150).setKey("panel7").setMargin(0, 5, 5, 0);
+            id = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+            pokemonView.setImageResource(id);
+            //pokemonView.setBackgroundColor(Color.GRAY);
+            //pokemonView.setBackgroundResource(R.drawable.border);
+            idPokemon = String.valueOf(i);
 
-        /*
+            final String finalIdPokemon = idPokemon;
+            pokemonView.setOnClickListener(new View.OnClickListener() {
 
-        puppeteer.baseLayout.addView(view1);
-        puppeteer.baseLayout.addView(view2);
-        puppeteer.baseLayout.addView(view3);
-        puppeteer.baseLayout.addView(view4);
-        puppeteer.baseLayout.addView(view5);
-        puppeteer.baseLayout.addView(view6);
-        puppeteer.baseLayout.addView(view7);
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "POKEMON CON ID: " + String.valueOf(finalIdPokemon), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        content.append(panel1);
-        content.append(panel2);
-        content.append(panel3);
-        content.append(panel4);
-        content.append(panel5);
-        content.append(panel6);
-        content.append(panel7);
-        content.update(this);
+            pokemonPanel.setView(pokemonView);
+            this.window.append(pokemonPanel);
+            pokemonPanel.setSize(-30,-15);
+            pokemonPanel.setMargin(15,5,25,0);
+            pokemonPanel.setKey(name);
+            windowsCanvas.addView(pokemonView);
+        }
 
-        */
+        // PONER ESTO
+        window.update(this);
 
-        AbsoluteLayout subBaseLayout = new AbsoluteLayout(context);
-        ScrollView scrollView = new ScrollView(context);
-        View view = new View(context);
-        scrollView.setBackgroundColor(Color.BLUE);
-        view.setBackgroundColor(Color.LTGRAY);
-
-        SfPanel scrollPanel = new SfPanel();
-        SfPanel innerPanel = new SfPanel();
-
-        puppeteer.baseLayout.addView(scrollView);
-        scrollView.addView(subBaseLayout);
-        subBaseLayout.addView(view);
-        subBaseLayout.addView(view1);
-        subBaseLayout.addView(view2);
-        subBaseLayout.addView(view3);
-        subBaseLayout.addView(view4);
-        subBaseLayout.addView(view5);
-        subBaseLayout.addView(view6);
-        subBaseLayout.addView(view7);
-
-        scrollPanel.setView(scrollView);
-        innerPanel.setView(view);
-
-        scrollPanel.setSize(-100, 200).append(innerPanel).setKey("scroll");
-        innerPanel.setSize(-100, 0).setKey("children");
-
-        innerPanel.append(panel1);
-        innerPanel.append(panel2);
-        innerPanel.append(panel3);
-        innerPanel.append(panel4);
-        innerPanel.append(panel5);
-        innerPanel.append(panel6);
-        innerPanel.append(panel7);
-
-        scrollPanel.scrollHost = true;
-
-        content.append(scrollPanel);
-        content.update(context);
+        // MAGIA
+        //Activity activity = (Activity) context;
+        this.setContentView(windowsCanvas);
     }
 }
