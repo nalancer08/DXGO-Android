@@ -80,10 +80,4 @@ public class Splash extends ActionBarActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Toast.makeText(this, "NO NO NO", Toast.LENGTH_SHORT).show();
-    }
-
 }

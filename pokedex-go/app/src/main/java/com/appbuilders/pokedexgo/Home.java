@@ -1,6 +1,7 @@
 package com.appbuilders.pokedexgo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class Home extends ActionBarActivity {
 
     protected SfPanel window;
+    protected Boolean favorito = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,11 @@ public class Home extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "POKEMON CON ID: " + String.valueOf(finalIdPokemon), Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(Home.this, pokemonDetail.class);
+                    intent.putExtra("pokemonId", finalIdPokemon);
+                    startActivity(intent);
+
                 }
             });
 
@@ -108,5 +115,11 @@ public class Home extends ActionBarActivity {
         // MAGIA
         //Activity activity = (Activity) context;
         this.setContentView(windowsCanvas);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Toast.makeText(this, "NO NO NO", Toast.LENGTH_SHORT).show();
     }
 }
